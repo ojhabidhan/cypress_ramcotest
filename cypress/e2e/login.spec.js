@@ -1,13 +1,13 @@
 describe('ERP Login Test', () => {
   it('Logs in', () => {
     // Flexible way to type username
-    cy.contains('User Name')
+    cy.contains('Enter User Name')
       .parent()              // go to parent container
       .find('input')         // find input inside it
       .type('dmuser');       // replace with your username
 
     // Flexible way to type password
-    cy.contains('Password')
+    cy.contains('Enter Password')
       .parent()
       .find('input')
       .type('TCRamco@2025'); // replace with your password
