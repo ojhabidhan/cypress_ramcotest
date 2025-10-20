@@ -1,10 +1,7 @@
 describe('ERP Login Test', () => {
   it('Logs in', () => {
     // Flexible way to type username
-    cy.contains('Enter User Name')
-      .parent()              // go to parent container
-      .find('input')         // find input inside it
-      .type('dmuser');       // replace with your username
+    cy.get('.x-form-field[type="text"]').first().type('dmuser');
 
     // Flexible way to type password
     cy.contains('Enter Password')
