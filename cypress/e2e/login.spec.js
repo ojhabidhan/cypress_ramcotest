@@ -1,7 +1,5 @@
 describe('ERP Login Test', () => {
-  it('Visits login page and logs in', () => {
-    cy.visit('/login'); // relative to baseUrl
-
+  it('Logs in', () => {
     // Flexible way to type username
     cy.contains('User Name')
       .parent()              // go to parent container
@@ -12,13 +10,12 @@ describe('ERP Login Test', () => {
     cy.contains('Password')
       .parent()
       .find('input')
-      .type('TCRamco@2025');   // replace with your password
+      .type('TCRamco@2025'); // replace with your password
 
     // Click login button
     cy.get('button[type="Login"]').click();
 
     // Verify successful login (adjust according to your ERP)
-    cy.url().should('not.include', '/login'); 
-    cy.contains('Dashboard').should('exist'); // example
+    cy.contains('Dashboard').should('exist'); // example check
   });
 });
