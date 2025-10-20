@@ -1,7 +1,7 @@
 describe('ERP Login Test', () => {
   it('Logs in', () => {
     // Flexible way to type username
-    cy.get('.x-form-field[type="text"]').first().type('dmuser');
+   cy.get('[name="ide_username"]').type('dmuser');
 
     // Flexible way to type password
     cy.contains('Enter Password')
