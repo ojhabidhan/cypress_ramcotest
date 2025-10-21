@@ -1,7 +1,7 @@
 describe('ERP Login Test', () => {
   it('Logs in', () => {
     // Flexible way to type username
-   cy.get('input[name="ide_username"]').type('dmuser');
+    cy.get('div[id*="ide_username-textfield-"] input').type('dmuser');
 
     // Flexible way to type password
     cy.get('input[data-componentid*="ide_password-textfield-"]').type('TCRamco@2025'); // replace with your password
