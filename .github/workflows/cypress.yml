@@ -32,15 +32,17 @@ jobs:
           browser: chrome
           headed: false
 
-      # Step 5: Upload videos
+# upload videos (optional)
       - name: Upload Cypress Videos
+        if: always()  
         uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
           path: cypress/videos
 
-      # Step 6: Upload screenshots
+     # upload screenshots if test fails
       - name: Upload Cypress Screenshots
+        if: failure()  # only upload if tests fail
         uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
