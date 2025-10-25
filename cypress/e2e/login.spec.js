@@ -1,5 +1,6 @@
 describe('ERP Login Test (auto-detect fields)', () => {
   it('Finds login fields and logs in', () => {
+    cy.visit("/");
     const usernameSelectors = [
       'input[data-componentid*="ide_username-textfield-"]',
       'input[name="ide_username"]',
