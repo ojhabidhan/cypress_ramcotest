@@ -8,9 +8,5 @@ module.exports = defineConfig({
     specPattern: "cypress/e2e/**/*.js",
     // Support file (optional)
     supportFile: "cypress/support/e2e.js",
-    defaultCommandTimeout: 10000,     // 10 seconds for all commands (get, click, type, etc.)
-    pageLoadTimeout: 10000,           // 10 seconds for cy.visit() page load
-    requestTimeout: 10000,            // for cy.request()
-    responseTimeout: 10000,           // for cy.wait() on XHRs
   },
 });
