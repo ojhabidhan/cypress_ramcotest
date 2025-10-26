@@ -1,12 +1,11 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   e2e: {
-    // Change this to your app URL if you want baseUrl
-    baseUrl: "https://aimms-sgima.train.tc.canada.ca/extui/",  
-    // Where your test files are located
-    specPattern: "cypress/e2e/**/*.js",
-    // Support file (optional)
-    supportFile: "cypress/support/e2e.js",
-  },
+    baseUrl: 'https://aimms-sgima.train.tc.canada.ca/extui/', // your actual ERP URL
+    defaultCommandTimeout: 60000,        // All cy.get/cy.contains will retry up to 60s
+    pageLoadTimeout: 60000,              // cy.visit() will wait up to 60s
+    viewportWidth: 1440,
+    viewportHeight: 900
+  }
 });
