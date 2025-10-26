@@ -1,10 +1,15 @@
+// cypress/e2e/erp_login.cy.js
+
 describe('ERP Login Test (auto-detect fields)', () => {
-  it('Finds login fields and logs in', () => {
-    cy.visit('/');
+  beforeEach(() => {
+    // Visit base URL defined in cypress.config.js
+    cy.visit('/', { timeout: 60000 });
 
-    // Wait for page to actually render login form (up to 60s)
+    // Wait until page structure stabilizes (optional)
     cy.get('body', { timeout: 60000 }).should('exist');
+  });
 
+  it('Finds login fields dynamically and logs in', () => {
     const usernameSelectors = [
       'input[data-componentid*="ide_username-textfield-"]',
       'input[name="ide_username"]',
@@ -43,36 +48,25 @@ describe('ERP Login Test (auto-detect fields)', () => {
       'div.x-btn-inner:contains("Login")'
     ];
 
-    // Custom helper function to find the first visible element matching any selector
-    function findAndType(selectors, text) {
-      for (const sel of selectors) {
-        cy.get('body').then(($body) => {
-          if ($body.find(sel).length > 0) {
-            cy.log(`✅ Found field with selector: ${sel}`);
-            cy.get(sel, { timeout: 20000 }).should('be.visible').type(text, { delay: 50 });
-            return false; // stop loop
-          }
-        });
-      }
-    }
-
-    // Wait until any username field appears
+    // --- Wait and type username ---
     cy.get(usernameSelectors.join(','), { timeout: 60000 })
       .should('be.visible')
       .first()
       .type('dmuser', { delay: 50 });
 
+    // --- Wait and type password ---
     cy.get(passwordSelectors.join(','), { timeout: 60000 })
       .should('be.visible')
       .first()
       .type('TCRamco@2025', { delay: 50 });
 
+    // --- Wait and click Login ---
     cy.get(loginButtonSelectors.join(','), { timeout: 60000 })
       .should('be.visible')
       .first()
       .click({ force: true });
 
-    // Check for successful login (adjust selector/text)
-    cy.contains('Dashboard', { timeout: 20000 }).should('exist');
+    // --- Verify login success (adjust keyword as needed) ---
+    cy.contains('Dashboard', { timeout: 60000 }).should('exist');
   });
 });
