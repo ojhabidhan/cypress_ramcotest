@@ -1,7 +1,10 @@
 describe('ERP Login Test (auto-detect fields)', () => {
   it('Finds login fields and logs in', () => {
-    cy.visit("/");
-    cy.wait(60000);
+    cy.visit('/');
+
+    // Wait for page to actually render login form (up to 60s)
+    cy.get('body', { timeout: 60000 }).should('exist');
+
     const usernameSelectors = [
       'input[data-componentid*="ide_username-textfield-"]',
       'input[name="ide_username"]',
@@ -40,50 +43,36 @@ describe('ERP Login Test (auto-detect fields)', () => {
       'div.x-btn-inner:contains("Login")'
     ];
 
-    let usernameFound = false;
-    let passwordFound = false;
-    let loginFound = false;
-
-    // --- Find and type username ---
-    cy.get('body').then(($body) => {
-      for (const sel of usernameSelectors) {
-        if ($body.find(sel).length > 0) {
-          cy.log(`✅ Username field found with selector: ${sel}`);
-          cy.get(sel).type('dmuser', { delay: 50 });
-          usernameFound = true;
-          break;
-        }
+    // Custom helper function to find the first visible element matching any selector
+    function findAndType(selectors, text) {
+      for (const sel of selectors) {
+        cy.get('body').then(($body) => {
+          if ($body.find(sel).length > 0) {
+            cy.log(`✅ Found field with selector: ${sel}`);
+            cy.get(sel, { timeout: 20000 }).should('be.visible').type(text, { delay: 50 });
+            return false; // stop loop
+          }
+        });
       }
-      if (!usernameFound) throw new Error('❌ No username field found.');
-    });
+    }
 
-    // --- Find and type password ---
-    cy.get('body').then(($body) => {
-      for (const sel of passwordSelectors) {
-        if ($body.find(sel).length > 0) {
-          cy.log(`✅ Password field found with selector: ${sel}`);
-          cy.get(sel).type('TCRamco@2025', { delay: 50 });
-          passwordFound = true;
-          break;
-        }
-      }
-      if (!passwordFound) throw new Error('❌ No password field found.');
-    });
+    // Wait until any username field appears
+    cy.get(usernameSelectors.join(','), { timeout: 60000 })
+      .should('be.visible')
+      .first()
+      .type('dmuser', { delay: 50 });
 
-    // --- Find and click login button ---
-    cy.get('body').then(($body) => {
-      for (const sel of loginButtonSelectors) {
-        if ($body.find(sel).length > 0) {
-          cy.log(`✅ Login button found with selector: ${sel}`);
-          cy.get(sel).click({ force: true });
-          loginFound = true;
-          break;
-        }
-      }
-      if (!loginFound) throw new Error('❌ No login button found.');
-    });
+    cy.get(passwordSelectors.join(','), { timeout: 60000 })
+      .should('be.visible')
+      .first()
+      .type('TCRamco@2025', { delay: 50 });
 
-    // --- Verify login success (adjust this) ---
-    cy.contains('Dashboard', { timeout: 10000 }).should('exist');
+    cy.get(loginButtonSelectors.join(','), { timeout: 60000 })
+      .should('be.visible')
+      .first()
+      .click({ force: true });
+
+    // Check for successful login (adjust selector/text)
+    cy.contains('Dashboard', { timeout: 20000 }).should('exist');
   });
 });
