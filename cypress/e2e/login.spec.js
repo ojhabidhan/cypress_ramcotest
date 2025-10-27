@@ -21,7 +21,7 @@ describe('ERP Login Test', () => {
       .type('TCRamco@2025', { delay: 50 });
 
     // Click login
-    cy.get('button[type="submit"]:visible', { timeout: 60000 })
+    cy.get('button[type="login"]:visible', { timeout: 60000 })
       .should('be.enabled')
       .click();
 
