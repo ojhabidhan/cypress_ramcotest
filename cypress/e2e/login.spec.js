@@ -18,13 +18,7 @@ describe('ERP Login Test', () => {
 
     cy.get('input[name="ide_password"]:visible', { timeout: 60000 })
       .should('be.enabled')
-      .type('TCRamco@2025', { delay: 50 });
-
-    // Tab twice to reach the login button, then press Enter
-    cy.focused()
-      .tab()   // move focus once
-      .tab()   // move focus again
-      .type('{enter}');  // trigger click on the focused element (login)
+      .type('TCRamco@2025{tab}{tab}{enter}', { delay: 50 });
 
     // Verify dashboard
     cy.contains('Dashboard', { timeout: 60000 }).should('exist');
