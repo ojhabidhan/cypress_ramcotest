@@ -23,7 +23,7 @@ describe('ERP Login Test', () => {
     // Tab twice to move to login button, then press Enter
     cy.focused().tab().tab().type('{enter}');
 
-    // Verify dashboard
-    cy.contains('Dashboard', { timeout: 60000 }).should('exist');
+    // Verify if loggedin
+    cy.get('input[placeholder="Activity Search"]', { timeout: 60000 }).should('be.visible');
   });
 });
