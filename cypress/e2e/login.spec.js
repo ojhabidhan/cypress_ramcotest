@@ -27,3 +27,21 @@ describe('ERP Login Test', () => {
     cy.get('input[placeholder="Activity Search"]', { timeout: 60000 }).should('be.visible');
   });
 });
+
+  it('Navigates to Maintain Invoice screen', () => {
+    // Step 1: Confirm dashboard/home is ready
+    cy.contains('Data Migration User', { timeout: 60000 }).should('be.visible');
+
+    // Step 2: Search and open “Maintain Invoice”
+    cy.get('input[placeholder="Activity Search"]', { timeout: 60000 })
+      .click()
+      .type('Maintain Invoice', { delay: 100 });
+
+    // Wait for dropdown results and click first result
+    cy.get('#cmbActSearch-combofield-1095-picker span:nth-of-type(1)', { timeout: 20000 })
+      .click();
+
+    // Step 3: Confirm that the screen loaded
+    cy.contains('Maintain Invoice', { timeout: 60000 }).should('be.visible');
+  });
+});
