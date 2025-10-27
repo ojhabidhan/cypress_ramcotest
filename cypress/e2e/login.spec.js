@@ -20,8 +20,8 @@ describe('ERP Login Test', () => {
       .should('be.enabled')
       .type('TCRamco@2025', { delay: 50 });
 
-    // Click login
-    cy.get('button[type="login"]:visible', { timeout: 60000 })
+    // Click login button (dynamic handling)
+    cy.get('div[id^="button-"][id$="-btnEl"]:visible', { timeout: 60000 })
       .should('be.enabled')
       .click();
 
